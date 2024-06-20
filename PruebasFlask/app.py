@@ -16,6 +16,17 @@ mysql = MySQL(app)
 def index():
     return render_template('home.html')
 
+@app.route('/consulta')
+def consulta():
+    try:
+        cursor= mysql.connection.cursor()
+        cursor.execute('select * from tbmedicos')
+        consultaM= cursor.fetchall()
+        return render_template('consultaMedicos.html', medicos = consultaM)
+    except Exception as e:
+        print(e)
+    
+
 @app.route('/registro')
 def registro():
     return render_template('formularioMedicos.html')
@@ -39,7 +50,7 @@ def medico():
         mysql.connection.commit()
         
         flash('Medico registrado correctamente')
-        return redirect(url_for('registro'))
+        return redirect(url_for('consulta'))
 
 # Manejo de excepciones para rutas
 @app.errorhandler(404)
