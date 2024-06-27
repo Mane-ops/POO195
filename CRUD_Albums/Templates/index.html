@@ -6,6 +6,14 @@
     <title>Formulario Albums</title>
 </head>
 <body>
+    <script>
+        function deleteA(albumId){
+            var del = confirm("Borrar album?");
+            if (del){
+                window.location.href = "/eliminarAlbum/" + albumId;
+            }   
+        }
+    </script>
 
     <!-- mensaje con Jinja -->
     {% with msj= get_flashed_messages() %}
@@ -55,11 +63,12 @@
                 <td>{{ album.2 }}</td>
                 <td>{{ album.3 }}</td>
                 <td> <a href="/editar/{{ album.0 }}"> Editar </a></td>
-                <td> <a href="#"> Borrar </a></td>
+                <td><a onclick="deleteA('{{ album.0 }}')" href="javascript:void(0);">Borrar</a></td>
             </tr>
             {% endfor %}
         </tbody>
     </table>
+    
 
 </body>
 </html>

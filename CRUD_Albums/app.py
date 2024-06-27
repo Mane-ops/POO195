@@ -61,6 +61,13 @@ def editarAlbum(id):
         
         flash('Album editado correctamente')
         return redirect(url_for('index'))
+    
+@app.route('/eliminarAlbum/<id>')
+def delete(id):
+    cursor = mysql.connection.cursor()
+    cursor.execute('delete from albums where idAlbum= %s',(id))
+    mysql.connection.commit()
+    return redirect(url_for('index'))
 
 # Manejo de excepciones para rutas
 @app.errorhandler(404)
