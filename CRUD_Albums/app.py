@@ -42,7 +42,7 @@ def guardarAlbum():
 @app.route('/editar/<id>')
 def editar(id):
     cur= mysql.connection.cursor()
-    cur.execute('select * from albums where idAlbum=%s', (id))
+    cur.execute('select * from albums where idAlbum=%s ', [id])
     albumE= cur.fetchone()
     return render_template('editar.html', album= albumE)
 

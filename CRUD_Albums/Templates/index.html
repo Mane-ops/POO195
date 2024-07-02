@@ -1,74 +1,77 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Formulario Albums</title>
-</head>
-<body>
-    <script>
-        function deleteA(albumId){
-            var del = confirm("Borrar album?");
-            if (del){
-                window.location.href = "/eliminarAlbum/" + albumId;
-            }   
-        }
-    </script>
+{%  extends "plantilla.html"    %}
+
+{%block body%}
 
     <!-- mensaje con Jinja -->
     {% with msj= get_flashed_messages() %}
     {% if msj %}
     {% for mensaje in msj %}
-        <p>{{ mensaje }}</p>
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+            <strong>{{ mensaje }}</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+
     {% endfor %}
     {% endif %}
     {% endwith %}
 
-    <form action="/guardarAlbum" method="post">
+    <h1 class="text-center mt-5 mb-5 display-4 text-danger">Gestión de Albums</h1>
 
-        <label>Titulo:</label>
-        <input type="text" name="txtTitulo">
+    <div class="row">
+        <div class="col-md-5">
 
-        <label>Artista:</label>
-        <input type="text" name="txtArtista">
+            <form action="/guardarAlbum" method="post">
 
-        <label>Año:</label>
-        <input type="number" name="txtAnio">
+                <label>Titulo:</label>
+                <input type="text" name="txtTitulo">
+        
+                <label>Artista:</label>
+                <input type="text" name="txtArtista">
+        
+                <label>Año:</label>
+                <input type="number" name="txtAnio">
+        
+                <button type="submit">Guardar Album</button>
+        
+            </form>
 
-        <button type="submit">Guardar Album</button>
+        </div>
 
-    </form>
+        <div class="col-md-7">
+            <table>
+                <thead>
+                    <tr>
+                        <td>ID:</td>
+                        <td>Album:</td>
+                        <td>Artista:</td>
+                        <td>Año:</td>
+                        <td>Operaciones</td>
+                    </tr>
+                </thead>
+        
+                <tbody>
+                    {% for album in albums %}
+                    <tr>
+                        <td>{{ album.0 }}</td>
+                        <td>{{ album.1 }}</td>
+                        <td>{{ album.2 }}</td>
+                        <td>{{ album.3 }}</td>
+                        <td> <a href="/editar/{{ album.0 }}"> Editar </a></td>
+                        <td><a onclick="deleteA('{{ album.0 }}')" href="javascript:void(0);">Borrar</a></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>  
+        </div>
 
+    </div>
 
-    <br>
-    <br>
-    <br>
-
-    <table>
-        <thead>
-            <tr>
-                <td>ID:</td>
-                <td>Album:</td>
-                <td>Artista:</td>
-                <td>Año:</td>
-                <td>Operaciones</td>
-            </tr>
-        </thead>
-
-        <tbody>
-            {% for album in albums %}
-            <tr>
-                <td>{{ album.0 }}</td>
-                <td>{{ album.1 }}</td>
-                <td>{{ album.2 }}</td>
-                <td>{{ album.3 }}</td>
-                <td> <a href="/editar/{{ album.0 }}"> Editar </a></td>
-                <td><a onclick="deleteA('{{ album.0 }}')" href="javascript:void(0);">Borrar</a></td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
     
 
-</body>
-</html>
+
+    <br>
+    <br>
+    <br>
+
+
+    {%endblock%}
