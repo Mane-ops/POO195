@@ -6,10 +6,18 @@
     {% with msj= get_flashed_messages() %}
     {% if msj %}
     {% for mensaje in msj %}
-        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+        <!-- <div class="alert alert-warning alert-dismissible fade show" role="alert">
             <strong>{{ mensaje }}</strong>
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-          </div>
+          </div> -->
+
+          <script>
+            Swal.fire({
+                title: "Correcto",
+                text: "Album guardado correctamente",
+                icon: "success"
+              });
+          </script>
 
     {% endfor %}
     {% endif %}
@@ -20,25 +28,42 @@
     <div class="row">
         <div class="col-md-5">
 
-            <form action="/guardarAlbum" method="post">
-
-                <label>Titulo:</label>
-                <input type="text" name="txtTitulo">
+            <div class="container" style="background: rgba(255, 255, 255, 0.35);
+            border-radius: 16px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.65);">
+                <form action="/guardarAlbum" method="post">
         
-                <label>Artista:</label>
-                <input type="text" name="txtArtista">
+                    
         
-                <label>Año:</label>
-                <input type="number" name="txtAnio">
+                    <div class="mb-3">
+                        <label >Titulo:</label>
+                        <input type="text" name="txtTitulo" class="form-control">
+                    </div>
         
-                <button type="submit">Guardar Album</button>
+                    <div class="mb-3">
+                        <label >Artista:</label>
+                        <input type="text" name="txtArtista" class="form-control">
+                    </div>
         
-            </form>
+                    <div class="mb-3">
+                        <label >Año</label>
+                        <input type="number" name="txtAnio" class="form-control">
+                    </div>
+        
+                    <button type="submit" class="btn btn-outline-secondary">Guardar Album</button>
+            
+                </form>
+        
+                </div>
 
         </div>
 
         <div class="col-md-7">
-            <table>
+            <div class="container">
+            <table class="table table-dark">
                 <thead>
                     <tr>
                         <td>ID:</td>
@@ -56,13 +81,16 @@
                         <td>{{ album.1 }}</td>
                         <td>{{ album.2 }}</td>
                         <td>{{ album.3 }}</td>
-                        <td> <a href="/editar/{{ album.0 }}"> Editar </a></td>
-                        <td><a onclick="deleteA('{{ album.0 }}')" href="javascript:void(0);">Borrar</a></td>
+                        <td> <a href="/editar/{{ album.0 }}" class="btn btn-warning"> Editar </a>   
+                            <a onclick="deleteA('{{ album.0 }}')" href="javascript:void(0);" class="btn btn-danger">Borrar</a>
+                        </td>
+                        <!-- <td><a onclick="deleteA('{{ album.0 }}')" href="javascript:void(0);">Borrar</a></td> -->
                     </tr>
                     {% endfor %}
                 </tbody>
             </table>  
         </div>
+    </div>
 
     </div>
 

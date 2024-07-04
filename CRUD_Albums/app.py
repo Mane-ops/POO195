@@ -65,7 +65,7 @@ def editarAlbum(id):
 @app.route('/eliminarAlbum/<id>')
 def delete(id):
     cursor = mysql.connection.cursor()
-    cursor.execute('delete from albums where idAlbum= %s',(id))
+    cursor.execute('delete from albums where idAlbum= %s',[id])
     mysql.connection.commit()
     return redirect(url_for('index'))
 
